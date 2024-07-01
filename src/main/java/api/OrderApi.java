@@ -5,6 +5,8 @@ import io.restassured.response.Response;
 import json.CreateOrderRequest;
 import json.Orders;
 
+import java.io.File;
+
 import static api.BaseSteps.getRequestSpec;
 
 public class OrderApi {
@@ -28,6 +30,8 @@ public class OrderApi {
                 .when()
                 .get(EndPoint.ORDER);
     }
+
+
     public Response getAllOrdersWithToken(String accessToken) {
         return getRequestSpec()
                 .header("Authorization", accessToken)
@@ -41,5 +45,12 @@ public class OrderApi {
                 .get(EndPoint.ORDER);
     }
 
+  //  public static Response postOrdersWithToken(File orders){
+  //      return getRequestSpec()
+  //              .header("Content-type", "application/json")
+  //              .body(orders)
+  //              .when()
+  //              .post(EndPoint.ORDER);
+  //  }
 
 }

@@ -25,7 +25,7 @@ public class OrderSteps {
     public ValidatableResponse createOrder(List<String> ingredient) {
         Orders requestBody = new Orders();
         requestBody.setIngredients(ingredient);
-        return OrderApi.getOrders(requestBody)
+        return orderApi.getOrders(requestBody)
                 .then();
     }
 

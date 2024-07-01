@@ -1,6 +1,9 @@
+
 import api.OrderApi;
 import api.UserApi;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.response.ValidatableResponse;
 import json.GetIngredientsResponse;
 import json.GetOrdersResponse;
@@ -24,11 +27,12 @@ import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 public class GetOrder {
     OrderSteps orderSteps;
     UserSteps userSteps;
+
     private static List<String> accessTokens = new ArrayList<>();
 
     @Before
     public void setUp() {
-
+     //   RestAssured.filters(new RequestLoggingFilter());
         userSteps = new UserSteps(new UserApi());
         orderSteps = new OrderSteps(new OrderApi());
 
@@ -76,16 +80,24 @@ public class GetOrder {
 
         int randomNum = ThreadLocalRandom.current().nextInt(1, ingredientsHash.size() + 1);
 
-        int number = orderSteps.createOrdersWithToken(ingredientsHash.subList(0, randomNum), accessToken)
+        List<Integer> number =
+                 orderSteps.createOrdersWithToken(ingredientsHash.subList(0, randomNum), accessToken)
                 .statusCode(SC_OK)
                 .body("success", Matchers.is(true))
-                .extract().path("orders.number");
+                .extract().path("order.number");
+
+      //  Response responseGetOrder = getOrder(accessToken);
+      //  List<Integer> orders = responseGetOrder.jsonPath().getList("orders.number");
+      //  Assert.assertTrue(orders.contains(orderNumber));
+
 
         GetOrdersResponse orders = orderSteps.getOrderWithAuthorization(accessToken)
                 .statusCode(SC_OK)
                 .extract().as(GetOrdersResponse.class);
 
-        Assert.assertEquals(number, (int)orders.getOrders().get(orders.getOrders().size() - 1).getNumber());
+        Assert.assertEquals(number, orders.getOrders().get(orders.getOrders().size() - 1).getNumber());
+      //  Assert.assertEquals(number);
+
 
         orderSteps.getOrderWithAuthorization(accessToken)
                 .statusCode(SC_OK)

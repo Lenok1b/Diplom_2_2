@@ -3,7 +3,6 @@ package json;
 import java.util.List;
 
 public class Orders {
-
     private List<String> ingredients;
     private String _id;
     private String status;
@@ -70,5 +69,4 @@ public class Orders {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }
