@@ -1,7 +1,9 @@
+
 package steps;
 
 import api.OrderApi;
 import io.qameta.allure.Step;
+import io.restassured.response.ExtractableResponse;
 import io.restassured.response.ValidatableResponse;
 import json.CreateOrderRequest;
 import json.Orders;
@@ -37,16 +39,30 @@ public class OrderSteps {
                 .then();
     }
 
+
+
     @Step("получение заказа без авторизации")
     public ValidatableResponse getOrderWithoutAuthorization() {
         return orderApi.getAllOrdersWithoutToken()
                 .then();
     }
 
-    @Step("получение заказа без авторизации")
+    @Step("получение заказа c авторизацией")
     public ValidatableResponse getOrderWithAuthorization(String accessToken) {
         return orderApi.getAllOrdersWithToken(accessToken)
                 .then();
     }
 
+    @Step("получение заказа c авторизацией")
+    public ValidatableResponse postOrderWithAuthorization(String accessToken) {
+        return orderApi.postAllOrdersWithToken(accessToken)
+                .then();
+    }
+
+    public ValidatableResponse postOrdersWithToken(List<String> ingredient, String accestoken) {
+        CreateOrderRequest requestBody = new CreateOrderRequest();
+        requestBody.setIngredients(ingredient);
+        return orderApi.postOrdersWithToken(requestBody,accestoken)
+                .then();
+    }
 }

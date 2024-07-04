@@ -1,3 +1,4 @@
+
 package api;
 
 import endpoint.EndPoint;
@@ -9,8 +10,9 @@ import static io.restassured.RestAssured.given;
 
 public abstract class BaseSteps {
     protected static RequestSpecification getRequestSpec() {
-        return given()
+        return given().log().all()
                 .baseUri(EndPoint.BaseURL)
                 .contentType(ContentType.JSON);
     }
 }
+

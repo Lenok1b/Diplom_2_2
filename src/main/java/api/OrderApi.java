@@ -2,11 +2,10 @@ package api;
 
 import endpoint.EndPoint;
 import io.restassured.response.Response;
+import io.restassured.response.Validatable;
 import json.CreateOrderRequest;
 import json.Orders;
-
-import java.io.File;
-
+//import java.io.File;
 import static api.BaseSteps.getRequestSpec;
 
 public class OrderApi {
@@ -45,12 +44,27 @@ public class OrderApi {
                 .get(EndPoint.ORDER);
     }
 
-  //  public static Response postOrdersWithToken(File orders){
-  //      return getRequestSpec()
-  //              .header("Content-type", "application/json")
-  //              .body(orders)
-  //              .when()
-  //              .post(EndPoint.ORDER);
-  //  }
+    public Response postAllOrdersWithToken(String accessToken) {
+        return getRequestSpec()
+                .header("Authorization", accessToken)
+                .when()
+                .post(EndPoint.ORDER);
+    }
+
+    public static Response postOrdersWithToken(CreateOrderRequest orders, String accestoken) {
+        return getRequestSpec()
+                .header("Authorization", accestoken)
+                .body(orders)
+                .when()
+                .post(EndPoint.ORDER);
+    }
+
+    //  public static Response postOrdersWithToken(File orders){
+    //      return getRequestSpec()
+    //              .header("Content-type", "application/json")
+    //              .body(orders)
+    //              .when()
+    //              .post(EndPoint.ORDER);
+    //  }
 
 }

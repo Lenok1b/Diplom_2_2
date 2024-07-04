@@ -1,4 +1,5 @@
 
+
 import api.OrderApi;
 import api.UserApi;
 import io.qameta.allure.junit4.DisplayName;
@@ -19,6 +20,7 @@ import steps.UserSteps;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.apache.http.HttpStatus.SC_OK;
@@ -32,7 +34,7 @@ public class GetOrder {
 
     @Before
     public void setUp() {
-      //  RestAssured.filters(new RequestLoggingFilter());
+        //  RestAssured.filters(new RequestLoggingFilter());
         userSteps = new UserSteps(new UserApi());
         orderSteps = new OrderSteps(new OrderApi());
 
@@ -71,8 +73,9 @@ public class GetOrder {
         userSteps.login(email,password)
                 .statusCode(SC_OK);
 
-        /* GetIngredientsResponse ingredients;
+        GetIngredientsResponse ingredients;
         ingredients = orderSteps.getIngredient().extract().as(GetIngredientsResponse.class);
+
         List<String> ingredientsHash = new ArrayList<>();
         for (Ingredient ingredient: ingredients.getData()) {
             ingredientsHash.add(ingredient.get_id());
@@ -80,19 +83,21 @@ public class GetOrder {
 
         int randomNum = ThreadLocalRandom.current().nextInt(1, ingredientsHash.size() + 1);
 
-        int number =
-                 orderSteps.createOrdersWithToken(ingredientsHash.subList(0, randomNum), accessToken)
+        //int number = orderSteps.createOrdersWithToken(ingredientsHash.subList(0, randomNum), accessToken)
+        int number;
+        number = orderSteps.postOrdersWithToken(ingredientsHash.subList(0, randomNum), accessToken)
                 .statusCode(SC_OK)
                 .body("success", Matchers.is(true))
                 .extract().path("orders.number");
 
-        GetOrdersResponse orders = orderSteps.getOrderWithAuthorization(accessToken)
+        // GetOrdersResponse orders = orderSteps.getOrderWithAuthorization(accessToken)
+        GetOrdersResponse orders = orderSteps.postOrderWithAuthorization(accessToken)
                 .statusCode(SC_OK)
                 .extract().as(GetOrdersResponse.class);
 
-        Assert.assertEquals(number, orders.getOrders().get(orders.getOrders().size() - 1).getNumber());
+        Assert.assertEquals(number, Optional.ofNullable(orders.getOrders().get(orders.getOrders().size() - 1).getNumber()));
 
-*/
+
 
         orderSteps.getOrderWithAuthorization(accessToken)
                 .statusCode(SC_OK)
