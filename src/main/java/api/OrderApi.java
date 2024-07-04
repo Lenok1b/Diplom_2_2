@@ -59,12 +59,4 @@ public class OrderApi {
                 .post(EndPoint.ORDER);
     }
 
-    //  public static Response postOrdersWithToken(File orders){
-    //      return getRequestSpec()
-    //              .header("Content-type", "application/json")
-    //              .body(orders)
-    //              .when()
-    //              .post(EndPoint.ORDER);
-    //  }
-
-}
+ }
