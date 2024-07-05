@@ -52,7 +52,7 @@ public class OrderSteps {
         return orderApi.getAllOrdersWithToken(accessToken)
                 .then();
     }
-
+/*
     @Step("получение заказа c авторизацией")
     public ValidatableResponse postOrderWithAuthorization(String accessToken) {
         return orderApi.postAllOrdersWithToken(accessToken)
@@ -65,4 +65,5 @@ public class OrderSteps {
         return orderApi.postOrdersWithToken(requestBody,accestoken)
                 .then();
     }
+ */
 }

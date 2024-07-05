@@ -43,7 +43,7 @@ public class OrderApi {
                 .when()
                 .get(EndPoint.ORDER);
     }
-
+/*
     public Response postAllOrdersWithToken(String accessToken) {
         return getRequestSpec()
                 .header("Authorization", accessToken)
@@ -58,5 +58,7 @@ public class OrderApi {
                 .when()
                 .post(EndPoint.ORDER);
     }
+
+ */
 
  }
